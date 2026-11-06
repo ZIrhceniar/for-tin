@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>For You ♥</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="fx-canvas"></canvas>
+
+  <!-- ==================== INTERACTIVE LOCK SCREEN ==================== -->
+  <section id="lock-screen" class="lock-screen">
+    <div class="parallax-polaroids" id="parallax-stage" aria-hidden="true">
+      <div class="bg-pol p1" data-depth="0.03"><img src="assets/photos/memory_04.jpg" alt="" /></div>
+      <div class="bg-pol p2" data-depth="0.05"><img src="assets/photos/memory_12.jpg" alt="" /></div>
+      <div class="bg-pol p3" data-depth="0.04"><img src="assets/photos/memory_22.jpg" alt="" /></div>
+      <div class="bg-pol p4" data-depth="0.06"><img src="assets/photos/memory_31.jpg" alt="" /></div>
+      <div class="bg-pol p5" data-depth="0.03"><img src="assets/photos/memory_34.jpg" alt="" /></div>
+      <div class="bg-pol p6" data-depth="0.05"><img src="assets/photos/memory_08.jpg" alt="" /></div>
+    </div>
+
+    <div class="lock-postcard" id="lock-card">
+      <div class="lock-icon-ring" id="lock-icon-ring">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </div>
+
+      <h1 class="lock-question">How many years have we been together?</h1>
+
+      <form id="unlock-form" class="unlock-form" autocomplete="off">
+        <input
+          type="text"
+          id="password-input"
+          class="password-input"
+          placeholder="Type the answer..."
+          aria-label="How many years have we been together?"
+          autofocus
+        />
+        <button type="submit" class="unlock-btn">Unlock</button>
+      </form>
+      <p id="lock-error" class="lock-error" role="alert" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ==================== UNLOCKED INTERACTIVE SCRAPBOOK ==================== -->
+  <main id="scrapbook" class="scrapbook hidden" aria-hidden="true">
+    <!-- Top Floating Dock -->
+    <nav class="top-dock">
+      <button type="button" class="dock-btn active" data-jump="#film-stage">Our Video</button>
+      <button type="button" class="dock-btn" data-jump="#envelope-stage">Love Letter</button>
+      <button type="button" class="dock-btn" data-jump="#board-stage">Photo Board</button>
+      <button type="button" class="dock-btn lights-toggle" id="lights-btn" title="Dim background lights">
+        <span id="lights-label">Dim Lights</span>
+      </button>
+    </nav>
+
+    <!-- 1. THE FILM + INTERACTIVE ENVELOPE ROW -->
+    <section class="upper-workspace">
+      <!-- Left: Single Full Video in Tactile Frame -->
+      <div id="film-stage" class="film-stage">
+        <div class="tape-strip tape-top-left" aria-hidden="true"></div>
+        <div class="tape-strip tape-bottom-right" aria-hidden="true"></div>
+
+        <div class="polaroid-video-frame">
+          <video
+            id="main-video"
+            class="main-video"
+            controls
+            playsinline
+            preload="metadata"
+            poster="assets/video/poster.jpg"
+          >
+            <source src="assets/video/anniversary-full.mp4" type="video/mp4" />
+          </video>
+          <div class="frame-handwriting">Happy 3rd Anniversary, Bebe ♥</div>
+        </div>
+      </div>
+
+      <!-- Right: Interactive 3D Wax-Seal Envelope -->
+      <div id="envelope-stage" class="envelope-stage">
+        <div class="envelope-scene" id="envelope-scene">
+          <div class="envelope-box" id="envelope-box">
+            <!-- Envelope Back -->
+            <div class="env-back"></div>
+
+            <!-- The Letter Inside -->
+            <div class="env-letter" id="env-letter">
+              <div class="letter-paper">
+                <p>
+                  Thank you, bebe, for everything and for always being with me. These past 3 years have been some of the best times of my life—maraming first times, maraming bonding, away, at syempre pagkain HAHAHAH.
+                </p>
+                <p>
+                  If bibigyan man ako ng choice na ulitin 'tong 3 years na 'to, syempre hindi ko 'yun papalagpasin. Thank you uli, bebe—more anniversaries to come. Mwa ♥
+                </p>
+              </div>
+            </div>
+
+            <!-- Envelope Front Pocket & Top Flap -->
+            <div class="env-pocket"></div>
+            <div class="env-flap" id="env-flap"></div>
+
+            <!-- Interactive Wax Seal Button -->
+            <button type="button" class="wax-seal" id="wax-seal" aria-label="Open love letter">
+              <span>♥</span>
+            </button>
+          </div>
+
+          <button type="button" class="envelope-action-btn" id="envelope-action-btn">
+            Tap the wax seal to open your letter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. INTERACTIVE DRAGGABLE / SHUFFLEABLE POLAROID BOARD -->
+    <section id="board-stage" class="board-stage">
+      <div class="board-toolbar">
+        <span class="board-handwriting">Drag photos around or double-tap any photo to zoom</span>
+        <div class="board-actions">
+          <button type="button" class="tool-btn active" id="mode-scatter-btn">Scatter Table</button>
+          <button type="button" class="tool-btn" id="mode-grid-btn">Neat Wall</button>
+          <button type="button" class="tool-btn" id="reshuffle-btn">Shuffle</button>
+        </div>
+      </div>
+
+      <div id="polaroid-board" class="polaroid-board is-scattered"></div>
+    </section>
+  </main>
+
+  <!-- ==================== FULLSCREEN LIGHTBOX ==================== -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+    <button type="button" class="lb-close" id="lb-close" aria-label="Close">×</button>
+    <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+    <div class="lb-polaroid">
+      <img id="lb-img" src="" alt="Memory" />
+      <div id="lb-count" class="lb-count">1 / 36</div>
+    </div>
+    <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="Next">›</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
